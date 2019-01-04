@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:simple_permissions/simple_permissions.dart';
+import 'package:whatsapp/pages/chat_detail_screen.dart';
 
 class ContactListPage extends StatefulWidget {
   @override
@@ -65,7 +66,9 @@ class _ContactListPageState extends State<ContactListPage> {
                   Contact c = _contacts?.elementAt(index);
                   return ListTile(
                     onTap: () {
-                      print(c.avatar);
+                      Navigator.of(context).push(new MaterialPageRoute(
+                        builder: (context) => ChatDetailScreen(c)
+                      ));
                     },
                     leading: (c.avatar != null && c.avatar.length > 0)
                         ? CircleAvatar(backgroundImage: MemoryImage(c.avatar))
