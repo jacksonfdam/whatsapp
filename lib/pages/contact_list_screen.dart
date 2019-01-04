@@ -25,7 +25,7 @@ class _ContactListPageState extends State<ContactListPage> {
       final res = await SimplePermissions.requestPermission(permission);
       print("permission request result is " + res.toString());
       refreshContacts();
-    }else{
+    } else {
       refreshContacts();
     }
   }
@@ -46,14 +46,17 @@ class _ContactListPageState extends State<ContactListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Contacts Plugin Example')),
-      floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () {
-            Navigator.of(context).pushNamed("/add").then((_) {
-              refreshContacts();
-            });
-          }),
+      appBar: AppBar(
+        title: ListTileTheme(
+          child: ListTile(
+            title: Text('Select Contact'),
+            subtitle: Text('${_contacts?.length ?? 0} contacts'),
+          ),
+          textColor: Colors.white,
+          contentPadding: EdgeInsets.symmetric(vertical: -5.0, horizontal: 2.0),
+        ),
+        elevation: 0.7,
+      ),
       body: SafeArea(
         child: _contacts != null
             ? ListView.builder(
@@ -62,7 +65,7 @@ class _ContactListPageState extends State<ContactListPage> {
                   Contact c = _contacts?.elementAt(index);
                   return ListTile(
                     onTap: () {
-                      print('tapped from here');
+                      print(c.avatar);
                     },
                     leading: (c.avatar != null && c.avatar.length > 0)
                         ? CircleAvatar(backgroundImage: MemoryImage(c.avatar))

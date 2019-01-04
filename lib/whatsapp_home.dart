@@ -20,6 +20,11 @@ class _WhatsAppHomeState extends State<WhatsAppHome>
     _tabController = new TabController(vsync: this, initialIndex: 1, length: 4);
   }
 
+
+  void _showOverlay(BuildContext context){
+    Navigator.of(context).push(Contacts());
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -56,7 +61,7 @@ class _WhatsAppHomeState extends State<WhatsAppHome>
       floatingActionButton: new FloatingActionButton(
         backgroundColor: Theme.of(context).accentColor,
         child: new Icon(Icons.message, color: Colors.white,),
-        onPressed: () => print("open chart"),
+        onPressed: () => _showOverlay(context),
       ),
     );
   }

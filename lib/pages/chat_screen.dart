@@ -54,9 +54,6 @@ class Contacts extends ModalRoute<void> {
 
 class ChatScreen extends StatelessWidget {
 
-  void _showOverlay(BuildContext context){
-    Navigator.of(context).push(Contacts());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +67,7 @@ class ChatScreen extends StatelessWidget {
           ),
           FlatButton(
             child: Icon(Icons.add),
-            onPressed: () => _showOverlay(context),
+            onPressed: () => print('here'),
           )
         ],
       ),
