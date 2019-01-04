@@ -1,58 +1,12 @@
+import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
-import 'package:whatsapp/pages/contact_list_screen.dart';
-import 'package:whatsapp/models/chat_model.dart';
-
-class Contacts extends ModalRoute<void> {
-  @override
-  Duration get transitionDuration => Duration(milliseconds: 500);
-
-  @override
-  bool get barrierDismissible => false;
-
-  @override
-  Color get barrierColor => Colors.white.withOpacity(0.5);
-
-  @override
-  String get barrierLabel => null;
-
-  @override
-  bool get maintainState => true;
-
-  @override
-  Widget buildPage(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-  ) {
-    // This makes sure that text and other content follows the material style
-    return Material(
-      type: MaterialType.transparency,
-      // make sure that the overlay content is not cut off
-      child: SafeArea(
-        child: new ContactListPage(),
-      ),
-    );
-  }
-
-  @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
-    // You can add your own animations for the overlay content
-    return FadeTransition(
-      opacity: animation,
-      child: ScaleTransition(
-        scale: animation,
-        child: child,
-      ),
-    );
-  }
-
-  // TODO: implement opaque
-  @override
-  bool get opaque => true;
-}
+import 'package:whatsapp/models/chat_list_model.dart';
+import 'package:whatsapp/pages/chat_detail_screen.dart';
 
 class ChatScreen extends StatefulWidget {
+  final _chats;
+  ChatScreen(this._chats);
+
   @override
   ChatScreenState createState() {
     return new ChatScreenState();
@@ -60,37 +14,61 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State<ChatScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    // _populateChatList();
+  }
+
+  // _populateChatList() {
+  //   setState(() {
+  //     widget._chats.insertAll(0, widget.chats?.chats);
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return new ListView.builder(
-      itemCount: dummyData.length,
+      itemCount: widget._chats.chats.length,
       itemBuilder: (context, index) => new Column(
             children: <Widget>[
               new Divider(
                 height: 10.0,
               ),
               new ListTile(
+                onTap: () {
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (context) => ChatDetailScreen(widget._chats.chats[index])));
+                },
                 leading: new CircleAvatar(
-                  foregroundColor: Theme.of(context).primaryColor,
-                  backgroundColor: Colors.grey,
-                  backgroundImage: new NetworkImage(dummyData[index].avatarUrl),
-                ),
+                    foregroundColor: Theme.of(context).primaryColor,
+                    backgroundColor: Colors.grey,
+                    backgroundImage: (widget._chats.chats[index].avatar != null &&
+                            widget._chats.chats[index].avatar.length > 0)
+                        ? MemoryImage(widget._chats.chats[index].avatar)
+                        : Text(widget._chats.chats[index].displayName.length > 1
+                            ? widget._chats.chats[index].displayName?.substring(0, 2)
+                            : "")),
                 title: new Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     new Text(
-                      dummyData[index].name,
+                      widget._chats.chats[index].displayName ?? "",
                       style: new TextStyle(fontWeight: FontWeight.bold),
                     ),
                     new Text(
-                      dummyData[index].time,
+                      widget._chats.chats[index].displayName ?? "",
                       style: new TextStyle(color: Colors.grey, fontSize: 14.0),
                     ),
                   ],
                 ),
                 subtitle: new Container(
                   padding: const EdgeInsets.only(top: 5.0),
-                  child: new Text(dummyData[index].message, style: new TextStyle(color: Colors.grey, fontSize: 15.0),),
+                  child: new Text(
+                    'dummy data',
+                    style: new TextStyle(color: Colors.grey, fontSize: 15.0),
+                  ),
                 ),
               )
             ],

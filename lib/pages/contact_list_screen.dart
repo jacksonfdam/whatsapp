@@ -2,9 +2,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:simple_permissions/simple_permissions.dart';
+import 'package:whatsapp/models/chat_list_model.dart';
 import 'package:whatsapp/pages/chat_detail_screen.dart';
 
 class ContactListPage extends StatefulWidget {
+  final _chats;
+  ContactListPage(this._chats);
+
   @override
   _ContactListPageState createState() => _ContactListPageState();
 }
@@ -66,6 +70,7 @@ class _ContactListPageState extends State<ContactListPage> {
                   Contact c = _contacts?.elementAt(index);
                   return ListTile(
                     onTap: () {
+                      widget._chats.addChat(c);
                       Navigator.of(context).push(new MaterialPageRoute(
                         builder: (context) => ChatDetailScreen(c)
                       ));
