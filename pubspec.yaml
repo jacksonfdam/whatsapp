@@ -10,6 +10,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   contacts_service: ^0.0.9
   simple_permissions: ^0.1.9
+  intl: ^0.15.7
 
 
 dev_dependencies:

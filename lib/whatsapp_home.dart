@@ -5,6 +5,9 @@ import 'package:whatsapp/pages/chat_screen.dart';
 import 'package:whatsapp/pages/status_screen.dart';
 
 class WhatsAppHome extends StatefulWidget {
+  final chats;
+  WhatsAppHome(this.chats);
+
   @override
   _WhatsAppHomeState createState() => new _WhatsAppHomeState();
 }
@@ -22,7 +25,7 @@ class _WhatsAppHomeState extends State<WhatsAppHome>
 
 
   void _showOverlay(BuildContext context){
-    Navigator.of(context).push(Contacts());
+    Navigator.pushNamed(context, '/contacts');
   }
 
   @override
@@ -53,7 +56,7 @@ class _WhatsAppHomeState extends State<WhatsAppHome>
         controller: _tabController,
         children: <Widget>[
           new CameraScreen(),
-          new ChatScreen(),
+          new ChatScreen(widget.chats),
           new StatusScreen(),
           new CallScreen()
         ],
